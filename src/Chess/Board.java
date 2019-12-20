@@ -8,9 +8,10 @@ public class Board {
 
     public Board() {
         pieces = new LinkedList<>();
+        setup();
     }
 
-    public void move(Square pieceLocation, Square pieceDestination) {
+    public boolean move(Square pieceLocation, Square pieceDestination) {
         ListIterator<Piece> iterator = pieces.listIterator(0);
         Piece piece = null;
 
@@ -23,8 +24,16 @@ public class Board {
             }
         }
 
+        boolean moved = false;
+
         if(piece != null) {
-            piece.move(pieceDestination);
+            moved = piece.move(pieceDestination);
         }
+
+        return moved;
+    }
+
+    private void setup() {
+
     }
 }
