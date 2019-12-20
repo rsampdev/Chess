@@ -1,12 +1,16 @@
 package Tests;
 
-import Chess.*;
+import Chess.Board;
+import Chess.Color;
+import Chess.Piece;
+import Chess.Square;
+import Chess.Type;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class KingTests {
 
@@ -27,10 +31,19 @@ public class KingTests {
     }
 
     @Test
+    public void stayStillMove() {
+        boolean moved = Board.move(location, new Square(location.x, location.y));
+
+        assertEquals(false, moved);
+        assertEquals(2, king.getLocation().x);
+        assertEquals(2, king.getLocation().y);
+    }
+
+    @Test
     public void moveKingLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(1, king.getLocation().x);
         assertEquals(2, king.getLocation().y);
     }
@@ -39,7 +52,7 @@ public class KingTests {
     public void moveKingRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(3, king.getLocation().x);
         assertEquals(2, king.getLocation().y);
     }
@@ -48,7 +61,7 @@ public class KingTests {
     public void moveKingUp() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(2, king.getLocation().x);
         assertEquals(3, king.getLocation().y);
     }
@@ -57,7 +70,7 @@ public class KingTests {
     public void moveKingDown() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(2, king.getLocation().x);
         assertEquals(1, king.getLocation().y);
     }
@@ -66,7 +79,7 @@ public class KingTests {
     public void moveKingUpLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y + 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(1, king.getLocation().x);
         assertEquals(3, king.getLocation().y);
     }
@@ -75,7 +88,7 @@ public class KingTests {
     public void moveKingUpRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(3, king.getLocation().x);
         assertEquals(3, king.getLocation().y);
     }
@@ -84,7 +97,7 @@ public class KingTests {
     public void moveKingDownLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y - 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(1, king.getLocation().x);
         assertEquals(1, king.getLocation().y);
     }
@@ -93,7 +106,7 @@ public class KingTests {
     public void moveKingDownRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y - 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(3, king.getLocation().x);
         assertEquals(1, king.getLocation().y);
     }
@@ -102,13 +115,13 @@ public class KingTests {
     public void moveKingTwice() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(3, king.getLocation().x);
         assertEquals(3, king.getLocation().y);
 
         moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(4, king.getLocation().x);
         assertEquals(4, king.getLocation().y);
     }
@@ -117,13 +130,13 @@ public class KingTests {
     public void moveAndMoveBack() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(3, king.getLocation().x);
         assertEquals(3, king.getLocation().y);
 
         moved = Board.move(location, new Square(location.x - 1, location.y - 1));
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(2, king.getLocation().x);
         assertEquals(2, king.getLocation().y);
     }
@@ -139,11 +152,10 @@ public class KingTests {
 
         boolean moved = Board.move(location, pawn.getLocation());
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(5, king.getLocation().x);
         assertEquals(5, king.getLocation().y);
-
-        assertTrue(Board.getWhitePieces().isEmpty());
+        assertEquals(true, Board.getWhitePieces().isEmpty());
     }
 
     @Test
@@ -158,15 +170,14 @@ public class KingTests {
 
         boolean moved = Board.move(location, pawn.getLocation());
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(5, king.getLocation().x);
         assertEquals(5, king.getLocation().y);
-
-        assertTrue(Board.getWhitePieces().size() == 1);
+        assertEquals(1, Board.getWhitePieces().size());
 
         Board.remove(pawnNotToCapture.getLocation());
 
-        assertTrue(Board.getWhitePieces().size() == 0);
+        assertEquals(0, Board.getWhitePieces().size());
     }
 
     @Test
@@ -181,23 +192,24 @@ public class KingTests {
 
         boolean moved = Board.move(location, pawn.getLocation());
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(5, king.getLocation().x);
         assertEquals(5, king.getLocation().y);
-
-        assertTrue(Board.getWhitePieces().size() == 1);
+        assertEquals(1, Board.getWhitePieces().size());
 
         moved = Board.move(location, new Square(4, 5));
-        assertTrue(moved);
+
+        assertEquals(true, moved);
         assertEquals(4, king.getLocation().x);
         assertEquals(5, king.getLocation().y);
 
 
         moved = Board.move(location, nextPawn.getLocation());
-        assertTrue(moved);
+
+        assertEquals(true, moved);
         assertEquals(3, king.getLocation().x);
         assertEquals(5, king.getLocation().y);
-        
-        assertTrue(Board.getWhitePieces().size() == 0);
+
+        assertEquals(0, Board.getWhitePieces().size());
     }
 }
