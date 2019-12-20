@@ -197,7 +197,6 @@ public class KingTests {
         assertTrue(moved);
         assertEquals(3, king.getLocation().x);
         assertEquals(5, king.getLocation().y);
-
         
         assertTrue(Board.getWhitePieces().size() == 0);
     }
