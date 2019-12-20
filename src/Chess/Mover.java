@@ -1,7 +1,8 @@
 package Chess;
 
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Mover {
     static final int LOWER_BOUND = 1;
@@ -37,7 +38,7 @@ public class Mover {
     }
 
     private static boolean moveKing(Piece king, Square newLocation) {
-        LinkedList<Square> possibleMoves = new LinkedList<>();
+        HashSet<Square> possibleMoves = new HashSet<>();
         Square current = king.getLocation();
         Square temp = null;
 
@@ -52,16 +53,15 @@ public class Mover {
 
                 if (y == current.y && (x == current.x - 1 || x == current.x + 1)) {
                     possibleMoves.add(temp);
-                    continue;
                 }
             }
         }
 
-        return isWithinTheListOfPossibleMoves(current, newLocation, possibleMoves);
+        return isWithinTheListOfPossibleMoves(king, newLocation, possibleMoves);
     }
 
     private static boolean moveQueen(Piece queen, Square newLocation) {
-        LinkedList<Square> possibleMoves = new LinkedList<>();
+        HashSet<Square> possibleMoves = new HashSet<>();
         Square current = queen.getLocation();
 
         for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
@@ -78,11 +78,11 @@ public class Mover {
             }
         }
 
-        return isWithinTheListOfPossibleMoves(current, newLocation, possibleMoves);
+        return isWithinTheListOfPossibleMoves(queen, newLocation, possibleMoves);
     }
 
     private static boolean moveBishop(Piece bishop, Square newLocation) {
-        LinkedList<Square> possibleMoves = new LinkedList<>();
+        HashSet<Square> possibleMoves = new HashSet<>();
         Square current = bishop.getLocation();
 
         for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
@@ -93,11 +93,11 @@ public class Mover {
             }
         }
 
-        return isWithinTheListOfPossibleMoves(current, newLocation, possibleMoves);
+        return isWithinTheListOfPossibleMoves(bishop, newLocation, possibleMoves);
     }
 
     private static boolean moveKnight(Piece knight, Square newLocation) {
-        LinkedList<Square> possibleMoves = new LinkedList<>();
+        HashSet<Square> possibleMoves = new HashSet<>();
         Square current = knight.getLocation();
 
         for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
@@ -114,11 +114,11 @@ public class Mover {
             }
         }
 
-        return isWithinTheListOfPossibleMoves(current, newLocation, possibleMoves);
+        return isWithinTheListOfPossibleMoves(knight, newLocation, possibleMoves);
     }
 
     private static boolean moveRook(Piece rook, Square newLocation) {
-        LinkedList<Square> possibleMoves = new LinkedList<>();
+        HashSet<Square> possibleMoves = new HashSet<>();
         Square current = rook.getLocation();
 
         for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
@@ -129,11 +129,11 @@ public class Mover {
             }
         }
 
-        return isWithinTheListOfPossibleMoves(current, newLocation, possibleMoves);
+        return isWithinTheListOfPossibleMoves(rook, newLocation, possibleMoves);
     }
 
     private static boolean movePawn(Piece pawn, Square newLocation) {
-        LinkedList<Square> possibleMoves = new LinkedList<>();
+        HashSet<Square> possibleMoves = new HashSet<>();
         Square current = pawn.getLocation();
 
         boolean firstMove = (current.y == (LOWER_BOUND + 1)) || (current.y == (UPPER_BOUND + 1));
@@ -152,19 +152,44 @@ public class Mover {
             }
         }
 
-        return isWithinTheListOfPossibleMoves(current, newLocation, possibleMoves);
+        return isWithinTheListOfPossibleMoves(pawn, newLocation, possibleMoves);
     }
 
-    private static boolean isWithinTheListOfPossibleMoves(Square current, Square newLocation, LinkedList<Square> possibleMoves) {
-        ListIterator<Square> iterator = possibleMoves.listIterator(0);
+    private static boolean isWithinTheListOfPossibleMoves(Piece piece, Square newLocation, HashSet<Square> possibleMoves) {
+        Iterator<Square> tempIterator = possibleMoves.iterator();
         boolean moved = false;
+
+        Set<Square> occupiedSquares = Board.getOccupiedSquares();
+        HashSet<Square> actualMoves = new HashSet<>();
+
+        while (tempIterator.hasNext()) {
+            Square square = tempIterator.next();
+
+            if (occupiedSquares.contains(square)) {
+
+                Piece pieceInSpace = Board.getPiece(square);
+
+                if (piece.getColor() != pieceInSpace.getColor()) {
+                    actualMoves.add(square);
+                }
+
+            } else {
+                actualMoves.add(square);
+            }
+        }
+
+        Iterator<Square> iterator = actualMoves.iterator();
 
         while (iterator.hasNext()) {
             Square square = iterator.next();
 
             if (newLocation.x == square.x && newLocation.y == square.y) {
-                current.x = newLocation.x;
-                current.y = newLocation.y;
+                if (occupiedSquares.contains(square) && actualMoves.contains(square)) { // capture an enemy piece?
+                    Board.remove(square);
+                }
+
+                piece.getLocation().x = newLocation.x;
+                piece.getLocation().y = newLocation.y;
                 moved = true;
                 break;
             }

@@ -1,13 +1,15 @@
 package Chess;
 
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Board {
-    private static LinkedList<Piece> PIECES = new LinkedList<>();
+    private static HashMap<Square, Piece> PIECES = new HashMap<>();
 
     public static boolean move(Square pieceLocation, Square pieceDestination) {
-        ListIterator<Piece> iterator = Board.PIECES.listIterator(0);
+        Iterator<Piece> iterator = Board.PIECES.values().iterator();
         Piece piece = null;
 
         while (iterator.hasNext()) {
@@ -28,16 +30,24 @@ public class Board {
         return moved;
     }
 
-    public static void add(Piece piece) {
-        Board.PIECES.add(piece);
+    public static Set<Square> getOccupiedSquares() {
+        return PIECES.keySet();
     }
 
-    public static void remove(Piece piece) {
-        PIECES.remove(piece);
+    public static Piece getPiece(Square square) {
+        return PIECES.get(square);
+    }
+
+    public static void add(Square square, Piece piece) {
+        Board.PIECES.put(square, piece);
+    }
+
+    public static void remove(Square square) {
+        PIECES.remove(square);
     }
 
     public static void setup() {
-        PIECES = new LinkedList<>();
+        PIECES = new HashMap<>();
 
         Piece.setup(new Square(5, 1), Color.WHITE, Type.KING);
         Piece.setup(new Square(4, 1), Color.WHITE, Type.QUEEN);

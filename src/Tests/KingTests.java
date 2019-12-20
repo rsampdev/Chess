@@ -21,7 +21,7 @@ public class KingTests {
 
     @AfterEach
     public void after() {
-        Board.remove(king);
+        Board.remove(king.getLocation());
         location = null;
         king = null;
     }

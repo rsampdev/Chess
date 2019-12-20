@@ -28,7 +28,7 @@ public class Piece {
         piece.location = location;
         piece.color = color;
         piece.type = type;
-        Board.add(piece);
+        Board.add(piece.location, piece);
         return piece;
     }
 
