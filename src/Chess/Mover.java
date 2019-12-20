@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 public class Mover {
-    private static final int LOWER_BOUND = 1;
-    private static final int UPPER_BOUND = 8;
+    static final int LOWER_BOUND = 1;
+    static final int UPPER_BOUND = 8;
 
     public static boolean move(Piece piece, Square newLocation) {
         boolean moved = false;

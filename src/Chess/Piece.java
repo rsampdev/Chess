@@ -1,7 +1,7 @@
 package Chess;
 
 public enum Piece {
-    KING, QUEEN, BISHOP, ROOK, KNIGHT, PAWN;
+    KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN;
 
     private Square location;
     private Color color;
@@ -14,9 +14,10 @@ public enum Piece {
         return this.color;
     }
 
-    public void setup(Square location, Color color) {
-        this.location = location;
-        this.color = color;
+    public static void setup(Square location, Color color, Piece type) {
+        type.location = location;
+        type.color = color;
+        Board.add(type);
     }
 
     public boolean move(Square newLocation) {
