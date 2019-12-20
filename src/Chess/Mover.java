@@ -10,7 +10,7 @@ public class Mover {
     public static boolean move(Piece piece, Square newLocation) {
         boolean moved = false;
 
-        switch (piece) {
+        switch (piece.getType()) {
             case KING:
                 moved = moveKing(piece, newLocation);
                 break;
@@ -39,15 +39,20 @@ public class Mover {
     private static boolean moveKing(Piece king, Square newLocation) {
         LinkedList<Square> possibleMoves = new LinkedList<>();
         Square current = king.getLocation();
+        Square temp = null;
 
-        for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-            for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
-                if ((x == (current.x - 1) || x == (current.x + 1)) && (y == (current.y - 1) || y == (current.y + 1))) {
-                    possibleMoves.add(new Square(x, y));
-                } else if (x == current.x && (y == (current.y - 1) || y == (current.y + 1))) {
-                    possibleMoves.add(new Square(x, y));
-                } else if (y == current.y && (x == (current.x - 1) || x == (current.x + 1))) {
-                    possibleMoves.add(new Square(x, y));
+        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
+                temp = new Square(x, y);
+
+                if ((y == current.y + 1 || y == current.y - 1) && (x == current.x - 1 || x == current.x || x == current.x + 1)) {
+                    possibleMoves.add(temp);
+                    continue;
+                }
+
+                if (y == current.y && (x == current.x - 1 || x == current.x + 1)) {
+                    possibleMoves.add(temp);
+                    continue;
                 }
             }
         }
@@ -59,8 +64,8 @@ public class Mover {
         LinkedList<Square> possibleMoves = new LinkedList<>();
         Square current = queen.getLocation();
 
-        for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-            for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
                 if ((x == (current.x - 1) || x == (current.x + 1)) && (y == (current.y - 1) || y == (current.y + 1))) {
                     possibleMoves.add(new Square(x, y));
                 } else if (x == current.x && (y == (current.y - 1) || y == (current.y + 1))) {
@@ -80,8 +85,8 @@ public class Mover {
         LinkedList<Square> possibleMoves = new LinkedList<>();
         Square current = bishop.getLocation();
 
-        for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-            for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
                 if ((current.x + x) == (current.y + y)) {
                     possibleMoves.add(new Square((current.x + x), (current.y + y)));
                 }
@@ -95,8 +100,8 @@ public class Mover {
         LinkedList<Square> possibleMoves = new LinkedList<>();
         Square current = knight.getLocation();
 
-        for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-            for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
                 if (y == current.y - 2 || y == current.y + 2) {
                     if (x == current.x - 1 || x == current.x + 1) {
                         possibleMoves.add(new Square(x, y));
@@ -116,8 +121,8 @@ public class Mover {
         LinkedList<Square> possibleMoves = new LinkedList<>();
         Square current = rook.getLocation();
 
-        for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-            for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
                 if (x == current.x || y == current.y) {
                     possibleMoves.add(new Square(x, y));
                 }
@@ -133,8 +138,8 @@ public class Mover {
 
         boolean firstMove = (current.y == (LOWER_BOUND + 1)) || (current.y == (UPPER_BOUND + 1));
 
-        for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-            for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
+            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
                 int direction = pawn.getColor().direction();
 
                 if(firstMove && x == current.x && y == (current.y + direction * 2)) {

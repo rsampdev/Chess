@@ -1,10 +1,15 @@
 package Chess;
 
-public enum Piece {
-    KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN;
-
+public class Piece {
     private Square location;
     private Color color;
+    private Type type;
+
+    public Piece(Square location, Color color, Type type) {
+        this.location = location;
+        this.color = color;
+        this.type = type;
+    }
 
     public Square getLocation() {
         return this.location;
@@ -14,32 +19,20 @@ public enum Piece {
         return this.color;
     }
 
-    public static void setup(Square location, Color color, Piece type) {
-        type.location = location;
-        type.color = color;
-        Board.add(type);
+    public Type getType() {
+        return type;
+    }
+
+    public static Piece setup(Square location, Color color, Type type) {
+        Piece piece = new Piece(location, color, type);
+        piece.location = location;
+        piece.color = color;
+        piece.type = type;
+        Board.add(piece);
+        return piece;
     }
 
     public boolean move(Square newLocation) {
         return Mover.move(this, newLocation);
-    }
-}
-
-enum Color {
-    BLACK, WHITE;
-
-    public int direction() {
-        int direction = 0;
-
-        switch (this) {
-            case BLACK:
-                direction = -1;
-                break;
-            case WHITE:
-                direction = 1;
-                break;
-        }
-
-        return direction;
     }
 }
