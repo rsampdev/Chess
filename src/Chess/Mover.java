@@ -159,13 +159,13 @@ public class Mover {
         Iterator<Square> tempIterator = possibleMoves.iterator();
         boolean moved = false;
 
-        Set<Square> occupiedSquares = Board.getOccupiedSquares();
+        Set<String> occupiedSquares = Board.getOccupiedSquares();
         HashSet<Square> actualMoves = new HashSet<>();
 
         while (tempIterator.hasNext()) {
             Square square = tempIterator.next();
 
-            if (occupiedSquares.contains(square)) {
+            if (occupiedSquares.contains(square.keyPair())) {
 
                 Piece pieceInSpace = Board.getPiece(square);
 
@@ -184,12 +184,15 @@ public class Mover {
             Square square = iterator.next();
 
             if (newLocation.x == square.x && newLocation.y == square.y) {
-                if (occupiedSquares.contains(square) && actualMoves.contains(square)) { // capture an enemy piece?
+                if (occupiedSquares.contains(square.keyPair()) && actualMoves.contains(square)) { // capture an enemy piece?
                     Board.remove(square);
                 }
 
+                Board.remove(piece.getLocation());
                 piece.getLocation().x = newLocation.x;
                 piece.getLocation().y = newLocation.y;
+                Board.add(piece.getLocation(), piece);
+
                 moved = true;
                 break;
             }

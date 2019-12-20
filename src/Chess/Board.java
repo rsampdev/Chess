@@ -1,12 +1,9 @@
 package Chess;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class Board {
-    private static HashMap<Square, Piece> PIECES = new HashMap<>();
+    private static HashMap<String, Piece> PIECES = new HashMap<>();
 
     public static boolean move(Square pieceLocation, Square pieceDestination) {
         Iterator<Piece> iterator = Board.PIECES.values().iterator();
@@ -30,20 +27,54 @@ public class Board {
         return moved;
     }
 
-    public static Set<Square> getOccupiedSquares() {
+    public static Set<String> getOccupiedSquares() {
         return PIECES.keySet();
     }
 
+    public static HashSet<Piece> getBlackPieces() {
+        Collection<Piece> pieces = PIECES.values();
+        HashSet<Piece> blackPieces = new HashSet<>();
+
+        Iterator<Piece> iterator = pieces.iterator();
+
+        while (iterator.hasNext()) {
+            Piece piece = iterator.next();
+
+            if (piece.getColor() == Color.BLACK) {
+                blackPieces.add(piece);
+            }
+        }
+
+        return blackPieces;
+    }
+
+    public static HashSet<Piece> getWhitePieces() {
+        Collection<Piece> pieces = PIECES.values();
+        HashSet<Piece> whitePieces = new HashSet<>();
+
+        Iterator<Piece> iterator = pieces.iterator();
+
+        while (iterator.hasNext()) {
+            Piece piece = iterator.next();
+
+            if (piece.getColor() == Color.WHITE) {
+                whitePieces.add(piece);
+            }
+        }
+
+        return whitePieces;
+    }
+
     public static Piece getPiece(Square square) {
-        return PIECES.get(square);
+        return PIECES.get(square.keyPair());
     }
 
     public static void add(Square square, Piece piece) {
-        Board.PIECES.put(square, piece);
+        Board.PIECES.put(square.keyPair(), piece);
     }
 
     public static void remove(Square square) {
-        PIECES.remove(square);
+        PIECES.remove(square.keyPair());
     }
 
     public static void setup() {
