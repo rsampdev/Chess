@@ -30,7 +30,6 @@ public class RookTests {
         rook = null;
     }
 
-
     @Test
     public void stayStillMove() {
         boolean moved = Board.move(location, new Square(location.x, location.y));

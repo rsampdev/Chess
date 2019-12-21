@@ -49,9 +49,7 @@ public class Mover {
                 if ((y == current.y + 1 || y == current.y - 1) && (x == current.x - 1 || x == current.x || x == current.x + 1)) {
                     possibleMoves.add(temp);
                     continue;
-                }
-
-                if (y == current.y && (x == current.x - 1 || x == current.x + 1)) {
+                } else if (y == current.y && (x == current.x - 1 || x == current.x + 1)) {
                     possibleMoves.add(temp);
                 }
             }
@@ -68,7 +66,14 @@ public class Mover {
         for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
             for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
                 temp = new Square(x, y);
-                return false; // figure our rook and bishop first
+
+                if (x == current.x || y == current.y) {
+                    possibleMoves.add(temp);
+                } else if (current.x + x == current.y + y) {
+                    possibleMoves.add(temp);
+                } else if (((x + current.x) - (y - current.y)) == 2 * x) {
+                    possibleMoves.add(temp);
+                }
             }
         }
 
@@ -82,12 +87,12 @@ public class Mover {
 
         for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
             for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-                for (int k = -UPPER_BOUND + 1; k < UPPER_BOUND - 1; k ++) {
-                    temp = new Square(x, y);
+                temp = new Square(x, y);
 
-                    if(x == current.x + k && y == current.y + k) { // what even does this mean?
-                        possibleMoves.add(temp);
-                    }
+                if (current.x + x == current.y + y) {
+                    possibleMoves.add(temp);
+                } else if (((x + current.x) - (y - current.y)) == 2 * x) {
+                    possibleMoves.add(temp);
                 }
             }
         }
