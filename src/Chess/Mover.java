@@ -185,11 +185,7 @@ public class Mover {
             }
         }
 
-        Iterator<Square> iterator = actualMoves.iterator();
-
-        while (iterator.hasNext()) {
-            Square square = iterator.next();
-
+        for (Square square : actualMoves) {
             if (newLocation.x == square.x && newLocation.y == square.y) {
                 if (occupiedSquares.contains(square.keyPair()) && actualMoves.contains(square)) { // capture an enemy piece?
                     Board.remove(square);

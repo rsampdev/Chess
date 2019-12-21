@@ -11,8 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class KnightTests {
 
@@ -159,13 +157,12 @@ public class KnightTests {
     public void captureOnePiece() {
         Piece pawn = Piece.setup(new Square(location.x + 1, location.y + 2), Color.WHITE, Type.PAWN);
 
-        boolean moved = Board.move(location, new Square(location.x + 1, location.y + 2));
+        boolean moved = Board.move(location, pawn.getLocation());
 
-        assertTrue(moved);
+        assertEquals(true, moved);
         assertEquals(6, knight.getLocation().x);
         assertEquals(6, knight.getLocation().y);
-
-        assertTrue(Board.getWhitePieces().isEmpty());
+        assertEquals(true, Board.getWhitePieces().isEmpty());
     }
 
     @Test
@@ -173,7 +170,7 @@ public class KnightTests {
         Piece pawn = Piece.setup(new Square(6, 6), Color.WHITE, Type.PAWN);
         Piece pawnToNotCapture = Piece.setup(new Square(4, 6), Color.WHITE, Type.PAWN);
 
-        boolean moved = Board.move(location, new Square(6, 6));
+        boolean moved = Board.move(location, pawn.getLocation());
 
         assertEquals(true, moved);
         assertEquals(6, knight.getLocation().x);
@@ -190,18 +187,34 @@ public class KnightTests {
         Piece pawn = Piece.setup(new Square(6, 6), Color.WHITE, Type.PAWN);
         Piece nextPawn = Piece.setup(new Square(7, 4), Color.WHITE, Type.PAWN);
 
-        boolean moved = Board.move(location, new Square(6, 6));
+        boolean moved = Board.move(location, pawn.getLocation());
 
         assertEquals(true, moved);
         assertEquals(6, knight.getLocation().x);
         assertEquals(6, knight.getLocation().y);
         assertEquals(1, Board.getWhitePieces().size());
 
-        moved = Board.move(location, new Square(7, 4));
+        moved = Board.move(location, nextPawn.getLocation());
 
         assertEquals(true, moved);
         assertEquals(7, knight.getLocation().x);
         assertEquals(4, knight.getLocation().y);
         assertEquals(0, Board.getWhitePieces().size());
+    }
+
+    @Test
+    public void attemptToCaptureTeammate() {
+        Piece pawn = Piece.setup(new Square(6, 6), Color.BLACK, Type.PAWN);
+
+        boolean moved = Board.move(location, pawn.getLocation());
+
+        assertEquals(false, moved);
+        assertEquals(5, knight.getLocation().x);
+        assertEquals(4, knight.getLocation().y);
+        assertEquals(2, Board.getBlackPieces().size());
+
+        Board.remove(pawn.getLocation());
+
+        assertEquals(1, Board.getBlackPieces().size());
     }
 }

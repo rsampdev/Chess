@@ -40,25 +40,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveKingLeft() {
-        boolean moved = Board.move(location, new Square(location.x - 1, location.y));
-
-        assertEquals(true, moved);
-        assertEquals(1, king.getLocation().x);
-        assertEquals(2, king.getLocation().y);
-    }
-
-    @Test
-    public void moveKingRight() {
-        boolean moved = Board.move(location, new Square(location.x + 1, location.y));
-
-        assertEquals(true, moved);
-        assertEquals(3, king.getLocation().x);
-        assertEquals(2, king.getLocation().y);
-    }
-
-    @Test
-    public void moveKingUp() {
+    public void moveUp() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -67,7 +49,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveKingDown() {
+    public void moveDown() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(true, moved);
@@ -76,7 +58,25 @@ public class KingTests {
     }
 
     @Test
-    public void moveKingUpLeft() {
+    public void moveLeft() {
+        boolean moved = Board.move(location, new Square(location.x - 1, location.y));
+
+        assertEquals(true, moved);
+        assertEquals(1, king.getLocation().x);
+        assertEquals(2, king.getLocation().y);
+    }
+
+    @Test
+    public void moveRight() {
+        boolean moved = Board.move(location, new Square(location.x + 1, location.y));
+
+        assertEquals(true, moved);
+        assertEquals(3, king.getLocation().x);
+        assertEquals(2, king.getLocation().y);
+    }
+
+    @Test
+    public void moveUpLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -85,7 +85,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveKingUpRight() {
+    public void moveUpRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -94,7 +94,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveKingDownLeft() {
+    public void moveDownLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -103,7 +103,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveKingDownRight() {
+    public void moveDownRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -112,7 +112,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveKingTwice() {
+    public void moveTwice() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -211,5 +211,21 @@ public class KingTests {
         assertEquals(5, king.getLocation().y);
 
         assertEquals(0, Board.getWhitePieces().size());
+    }
+
+    @Test
+    public void attemptToCaptureTeammate() {
+        Piece pawn = Piece.setup(new Square(3, 3), Color.BLACK, Type.PAWN);
+
+        boolean moved = Board.move(location, pawn.getLocation());
+
+        assertEquals(false, moved);
+        assertEquals(2, king.getLocation().x);
+        assertEquals(2, king.getLocation().y);
+        assertEquals(2, Board.getBlackPieces().size());
+
+        Board.remove(pawn.getLocation());
+
+        assertEquals(1, Board.getBlackPieces().size());
     }
 }

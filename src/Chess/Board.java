@@ -1,6 +1,7 @@
 package Chess;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
     private static HashMap<String, Piece> PIECES = new HashMap<>();
@@ -33,36 +34,12 @@ public class Board {
 
     public static HashSet<Piece> getBlackPieces() {
         Collection<Piece> pieces = PIECES.values();
-        HashSet<Piece> blackPieces = new HashSet<>();
-
-        Iterator<Piece> iterator = pieces.iterator();
-
-        while (iterator.hasNext()) {
-            Piece piece = iterator.next();
-
-            if (piece.getColor() == Color.BLACK) {
-                blackPieces.add(piece);
-            }
-        }
-
-        return blackPieces;
+        return pieces.stream().filter(piece -> piece.getColor() == Color.BLACK).collect(Collectors.toCollection(HashSet::new));
     }
 
     public static HashSet<Piece> getWhitePieces() {
         Collection<Piece> pieces = PIECES.values();
-        HashSet<Piece> whitePieces = new HashSet<>();
-
-        Iterator<Piece> iterator = pieces.iterator();
-
-        while (iterator.hasNext()) {
-            Piece piece = iterator.next();
-
-            if (piece.getColor() == Color.WHITE) {
-                whitePieces.add(piece);
-            }
-        }
-
-        return whitePieces;
+        return pieces.stream().filter(piece -> piece.getColor() == Color.WHITE).collect(Collectors.toCollection(HashSet::new));
     }
 
     public static Piece getPiece(Square square) {
