@@ -21,6 +21,7 @@ public class BishopTests {
     public void before() {
         bishop = Piece.setup(new Square(4, 4), Color.BLACK, Type.BISHOP);
         location = bishop.getLocation();
+        Board.playerTurn = Color.BLACK;
     }
 
     @AfterEach
@@ -116,6 +117,7 @@ public class BishopTests {
         assertEquals(5, bishop.getLocation().y);
         assertEquals(1, Board.getWhitePieces().size());
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, nextPawn.getLocation());
 
         assertEquals(true, moved);

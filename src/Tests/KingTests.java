@@ -21,6 +21,7 @@ public class KingTests {
     public void before() {
         king = Piece.setup(new Square(2,2), Color.BLACK, Type.KING);
         location = king.getLocation();
+        Board.playerTurn = Color.BLACK;
     }
 
     @AfterEach
@@ -119,6 +120,7 @@ public class KingTests {
         assertEquals(3, king.getLocation().x);
         assertEquals(3, king.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -134,6 +136,7 @@ public class KingTests {
         assertEquals(3, king.getLocation().x);
         assertEquals(3, king.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x - 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -182,6 +185,7 @@ public class KingTests {
         assertEquals(2, king.getLocation().y);
         assertEquals(1, Board.getWhitePieces().size());
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, nextPawn.getLocation());
 
         assertEquals(true, moved);

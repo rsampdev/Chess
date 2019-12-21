@@ -6,6 +6,11 @@ import java.util.stream.Collectors;
 public class Board {
     private static HashMap<String, Piece> PIECES = new HashMap<>();
 
+    static final int LOWER_BOUND = 1;
+    static final int UPPER_BOUND = 8;
+
+    public static Color playerTurn = Color.WHITE;
+
     public static boolean move(Square pieceLocation, Square pieceDestination) {
         Iterator<Piece> iterator = Board.PIECES.values().iterator();
         Piece piece = null;
@@ -15,6 +20,10 @@ public class Board {
             Square square = piece.getLocation();
 
             if (square.x == pieceLocation.x && square.y == pieceLocation.y) {
+                if(piece.getColor() != playerTurn) {
+                    piece = null;
+                }
+
                 break;
             }
         }
@@ -23,6 +32,14 @@ public class Board {
 
         if(piece != null) {
             moved = piece.move(pieceDestination);
+
+            if(moved) {
+                if(playerTurn == Color.WHITE) {
+                    playerTurn = Color.BLACK;
+                } else {
+                    playerTurn = Color.WHITE;
+                }
+            }
         }
 
         return moved;
@@ -66,7 +83,7 @@ public class Board {
         Piece.setup(new Square(1, 1), Color.WHITE, Type.ROOK);
         Piece.setup(new Square(8, 1), Color.WHITE, Type.ROOK);
 
-        for (int i = Mover.LOWER_BOUND; i <= Mover.UPPER_BOUND; i++) {
+        for (int i = LOWER_BOUND; i <= UPPER_BOUND; i++) {
             Piece.setup(new Square(i, 2), Color.WHITE, Type.PAWN);
         }
 
@@ -79,7 +96,7 @@ public class Board {
         Piece.setup(new Square(1, 8), Color.BLACK, Type.ROOK);
         Piece.setup(new Square(8, 8), Color.BLACK, Type.ROOK);
 
-        for (int i = Mover.LOWER_BOUND; i <= Mover.UPPER_BOUND; i++) {
+        for (int i = LOWER_BOUND; i <= UPPER_BOUND; i++) {
             Piece.setup(new Square(i, 7), Color.BLACK, Type.PAWN);
         }
     }

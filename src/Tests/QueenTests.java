@@ -21,6 +21,7 @@ public class QueenTests {
     public void before() {
         queen = Piece.setup(new Square(4, 4), Color.BLACK, Type.QUEEN);
         location = queen.getLocation();
+        Board.playerTurn = Color.BLACK;
     }
 
     @AfterEach
@@ -83,6 +84,7 @@ public class QueenTests {
         assertEquals(4, queen.getLocation().x);
         assertEquals(5, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x - 1, location.y));
 
         assertEquals(true, moved);
@@ -98,6 +100,7 @@ public class QueenTests {
         assertEquals(4, queen.getLocation().x);
         assertEquals(5, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x + 1, location.y));
 
         assertEquals(true, moved);
@@ -113,6 +116,7 @@ public class QueenTests {
         assertEquals(4, queen.getLocation().x);
         assertEquals(3, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x - 1, location.y));
 
         assertEquals(true, moved);
@@ -128,6 +132,7 @@ public class QueenTests {
         assertEquals(4, queen.getLocation().x);
         assertEquals(3, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x + 1, location.y));
 
         assertEquals(true, moved);
@@ -179,6 +184,7 @@ public class QueenTests {
         assertEquals(4, queen.getLocation().x);
         assertEquals(8, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(8, location.y));
 
         assertEquals(true, moved);
@@ -194,6 +200,7 @@ public class QueenTests {
         assertEquals(5, queen.getLocation().x);
         assertEquals(4, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(6, 4));
 
         assertEquals(true, moved);
@@ -209,6 +216,7 @@ public class QueenTests {
         assertEquals(5, queen.getLocation().x);
         assertEquals(5, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(4, 4));
 
         assertEquals(true, moved);
@@ -224,6 +232,7 @@ public class QueenTests {
         assertEquals(5, queen.getLocation().x);
         assertEquals(5, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(6, 6));
 
         assertEquals(true, moved);
@@ -239,6 +248,7 @@ public class QueenTests {
         assertEquals(5, queen.getLocation().x);
         assertEquals(4, queen.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(4, 4));
 
         assertEquals(true, moved);
@@ -287,6 +297,7 @@ public class QueenTests {
         assertEquals(4, queen.getLocation().y);
         assertEquals(1, Board.getWhitePieces().size());
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, nextPawn.getLocation());
 
         assertEquals(true, moved);
@@ -352,6 +363,7 @@ public class QueenTests {
         assertEquals(5, queen.getLocation().y);
         assertEquals(1, Board.getWhitePieces().size());
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, nextPawn.getLocation());
 
         assertEquals(true, moved);

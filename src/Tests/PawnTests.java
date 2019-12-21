@@ -21,6 +21,7 @@ public class PawnTests {
     public void before() {
         pawn = Piece.setup(new Square(2,2), Color.WHITE, Type.PAWN);
         location = pawn.getLocation();
+        Board.playerTurn = Color.WHITE;
     }
 
     @AfterEach
@@ -92,6 +93,7 @@ public class PawnTests {
         assertEquals(2, pawn.getLocation().x);
         assertEquals(3, pawn.getLocation().y);
 
+        Board.playerTurn = Color.WHITE;
         moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(false, moved);
@@ -150,6 +152,7 @@ public class PawnTests {
         assertEquals(3, pawn.getLocation().y);
         assertEquals(1, Board.getBlackPieces().size());
 
+        Board.playerTurn = Color.WHITE;
         moved = Board.move(location, nextPawn.getLocation());
 
         assertEquals(true, moved);

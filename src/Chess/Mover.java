@@ -1,49 +1,65 @@
 package Chess;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public class Mover {
-    static final int LOWER_BOUND = 1;
-    static final int UPPER_BOUND = 8;
 
     public static boolean move(Piece piece, Square newLocation) {
-        boolean moved = false;
+        HashSet<Square> moves = movesFor(piece, newLocation);
+        return isWithinTheSetOfActualPossibleMovesAndThusWasMoved(piece, newLocation, moves);
+    }
+
+    public static HashSet<Square> movesFor(Piece piece, Square newLocation) {
+        HashSet<Square> possibleMoves = new HashSet<>();
 
         switch (piece.getType()) {
             case KING:
-                moved = moveKing(piece, newLocation);
+                kingMoves(piece, possibleMoves);
                 break;
             case QUEEN:
-                moved = moveQueen(piece, newLocation);
+                queenMoves(piece, possibleMoves);
                 break;
             case BISHOP:
-                moved = moveBishop(piece, newLocation);
+                bishopMoves(piece, possibleMoves);
                 break;
             case KNIGHT:
-                moved = moveKnight(piece, newLocation);
+                knightMoves(piece, possibleMoves);
                 break;
             case ROOK:
-                moved = moveRook(piece, newLocation);
+                rookMoves(piece, possibleMoves);
                 break;
             case PAWN:
-                moved = movePawn(piece, newLocation);
+                pawnMoves(piece, possibleMoves);
                 break;
             default:
                 break;
         }
 
-        return moved;
+        Set<String> occupiedSquares = Board.getOccupiedSquares();
+        HashSet<Square> actualMoves = new HashSet<>();
+
+        for (Square square : possibleMoves) {
+            if (occupiedSquares.contains(square.keyPair())) {
+                Piece pieceInSpace = Board.getPiece(square);
+
+                if (piece.getColor() != pieceInSpace.getColor()) {
+                    actualMoves.add(square);
+                }
+            } else {
+                actualMoves.add(square);
+            }
+        }
+
+        return actualMoves;
     }
 
-    private static boolean moveKing(Piece king, Square newLocation) {
-        HashSet<Square> possibleMoves = new HashSet<>();
+    private static void kingMoves(Piece king, HashSet<Square> possibleMoves) {
         Square current = king.getLocation();
         Square temp = null;
 
-        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
-            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
+        for (int x = Board.LOWER_BOUND; x <= Board.UPPER_BOUND; x++) {
+            for (int y = Board.LOWER_BOUND; y <= Board.UPPER_BOUND; y++) {
                 temp = new Square(x, y);
 
                 if ((y == current.y + 1 || y == current.y - 1) && (x == current.x - 1 || x == current.x || x == current.x + 1)) {
@@ -54,39 +70,19 @@ public class Mover {
                 }
             }
         }
-
-        return isWithinTheSetOfActualPossibleMovesAndThusWasMoved(king, newLocation, possibleMoves);
     }
 
-    private static boolean moveQueen(Piece queen, Square newLocation) {
-        HashSet<Square> possibleMoves = new HashSet<>();
-        Square current = queen.getLocation();
-        Square temp = null;
-
-        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
-            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-                temp = new Square(x, y);
-
-                if (x == current.x || y == current.y) {
-                    possibleMoves.add(temp);
-                } else if (current.x + x == current.y + y) {
-                    possibleMoves.add(temp);
-                } else if (((x + current.x) - (y - current.y)) == 2 * x) {
-                    possibleMoves.add(temp);
-                }
-            }
-        }
-
-        return isWithinTheSetOfActualPossibleMovesAndThusWasMoved(queen, newLocation, possibleMoves);
+    private static void queenMoves(Piece queen, HashSet<Square> possibleMoves) {
+        bishopMoves(queen, possibleMoves);
+        rookMoves(queen, possibleMoves);
     }
 
-    private static boolean moveBishop(Piece bishop, Square newLocation) {
-        HashSet<Square> possibleMoves = new HashSet<>();
+    private static void bishopMoves(Piece bishop, HashSet<Square> possibleMoves) {
         Square current = bishop.getLocation();
         Square temp = null;
 
-        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
-            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
+        for (int x = Board.LOWER_BOUND; x <= Board.UPPER_BOUND; x++) {
+            for (int y = Board.LOWER_BOUND; y <= Board.UPPER_BOUND; y++) {
                 temp = new Square(x, y);
 
                 if (current.x + x == current.y + y) {
@@ -96,17 +92,14 @@ public class Mover {
                 }
             }
         }
-
-        return isWithinTheSetOfActualPossibleMovesAndThusWasMoved(bishop, newLocation, possibleMoves);
     }
 
-    private static boolean moveKnight(Piece knight, Square newLocation) {
-        HashSet<Square> possibleMoves = new HashSet<>();
+    private static void knightMoves(Piece knight, HashSet<Square> possibleMoves) {
         Square current = knight.getLocation();
         Square temp = null;
 
-        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
-            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
+        for (int x = Board.LOWER_BOUND; x <= Board.UPPER_BOUND; x++) {
+            for (int y = Board.LOWER_BOUND; y <= Board.UPPER_BOUND; y++) {
                 temp = new Square(x, y);
 
                 if (y == current.y - 2 || y == current.y + 2) {
@@ -120,17 +113,14 @@ public class Mover {
                 }
             }
         }
-
-        return isWithinTheSetOfActualPossibleMovesAndThusWasMoved(knight, newLocation, possibleMoves);
     }
 
-    private static boolean moveRook(Piece rook, Square newLocation) {
-        HashSet<Square> possibleMoves = new HashSet<>();
+    private static void rookMoves(Piece rook, HashSet<Square> possibleMoves) {
         Square current = rook.getLocation();
         Square temp = null;
 
-        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
-            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
+        for (int x = Board.LOWER_BOUND; x <= Board.UPPER_BOUND; x++) {
+            for (int y = Board.LOWER_BOUND; y <= Board.UPPER_BOUND; y++) {
                 temp = new Square(x, y);
 
                 if (x == current.x || y == current.y) {
@@ -138,20 +128,17 @@ public class Mover {
                 }
             }
         }
-
-        return isWithinTheSetOfActualPossibleMovesAndThusWasMoved(rook, newLocation, possibleMoves);
     }
 
-    private static boolean movePawn(Piece pawn, Square newLocation) {
-        HashSet<Square> possibleMoves = new HashSet<>();
+    private static void pawnMoves(Piece pawn, HashSet<Square> possibleMoves) {
         Square current = pawn.getLocation();
         Color color = pawn.getColor();
         Square temp = null;
 
-        boolean firstMove = (color == Color.WHITE && current.y == (LOWER_BOUND + 1)) || (color == Color.BLACK && current.y == (UPPER_BOUND + 1));
+        boolean firstMove = (color == Color.WHITE && current.y == (Board.LOWER_BOUND + 1)) || (color == Color.BLACK && current.y == (Board.UPPER_BOUND + 1));
 
-        for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
-            for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
+        for (int x = Board.LOWER_BOUND; x <= Board.UPPER_BOUND; x++) {
+            for (int y = Board.LOWER_BOUND; y <= Board.UPPER_BOUND; y++) {
                 int direction = color.direction();
                 temp = new Square(x, y);
 
@@ -166,36 +153,15 @@ public class Mover {
                 }
             }
         }
-
-        return isWithinTheSetOfActualPossibleMovesAndThusWasMoved(pawn, newLocation, possibleMoves);
     }
 
-    private static boolean isWithinTheSetOfActualPossibleMovesAndThusWasMoved(Piece piece, Square newLocation, HashSet<Square> possibleMoves) {
-        Iterator<Square> tempIterator = possibleMoves.iterator();
+    private static boolean isWithinTheSetOfActualPossibleMovesAndThusWasMoved(Piece piece, Square newLocation, HashSet<Square> moves) {
+        Set<String> occupiedSquares = Board.getOccupiedSquares();
         boolean moved = false;
 
-        Set<String> occupiedSquares = Board.getOccupiedSquares();
-        HashSet<Square> actualMoves = new HashSet<>();
-
-        while (tempIterator.hasNext()) {
-            Square square = tempIterator.next();
-
-            if (occupiedSquares.contains(square.keyPair())) {
-
-                Piece pieceInSpace = Board.getPiece(square);
-
-                if (piece.getColor() != pieceInSpace.getColor()) {
-                    actualMoves.add(square);
-                }
-
-            } else {
-                actualMoves.add(square);
-            }
-        }
-
-        for (Square square : actualMoves) {
+        for (Square square : moves) {
             if (newLocation.x == square.x && newLocation.y == square.y) {
-                if (occupiedSquares.contains(square.keyPair()) && actualMoves.contains(square)) { // capture an enemy piece?
+                if (occupiedSquares.contains(square.keyPair()) && moves.contains(square)) { // capture an enemy piece?
                     Board.remove(square);
                 }
 

@@ -21,6 +21,7 @@ public class RookTests {
     public void before() {
         rook = Piece.setup(new Square(2, 2), Color.BLACK, Type.ROOK);
         location = rook.getLocation();
+        Board.playerTurn = Color.BLACK;
     }
 
     @AfterEach
@@ -83,6 +84,7 @@ public class RookTests {
         assertEquals(2, rook.getLocation().x);
         assertEquals(3, rook.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x - 1, location.y));
 
         assertEquals(true, moved);
@@ -98,6 +100,7 @@ public class RookTests {
         assertEquals(2, rook.getLocation().x);
         assertEquals(3, rook.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x + 1, location.y));
 
         assertEquals(true, moved);
@@ -113,6 +116,7 @@ public class RookTests {
         assertEquals(2, rook.getLocation().x);
         assertEquals(1, rook.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x - 1, location.y));
 
         assertEquals(true, moved);
@@ -128,6 +132,7 @@ public class RookTests {
         assertEquals(2, rook.getLocation().x);
         assertEquals(1, rook.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(location.x + 1, location.y));
 
         assertEquals(true, moved);
@@ -143,6 +148,7 @@ public class RookTests {
         assertEquals(3, rook.getLocation().x);
         assertEquals(2, rook.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(4, 2));
 
         assertEquals(true, moved);
@@ -158,6 +164,7 @@ public class RookTests {
         assertEquals(3, rook.getLocation().x);
         assertEquals(2, rook.getLocation().y);
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, new Square(2, 2));
 
         assertEquals(true, moved);
@@ -206,6 +213,7 @@ public class RookTests {
         assertEquals(2, rook.getLocation().y);
         assertEquals(1, Board.getWhitePieces().size());
 
+        Board.playerTurn = Color.BLACK;
         moved = Board.move(location, nextPawn.getLocation());
 
         assertEquals(true, moved);
