@@ -143,36 +143,26 @@ public class KingTests {
 
     @Test
     public void captureOnePiece() {
-        Board.remove(location);
-
-        king = Piece.setup(new Square(4,4), Color.BLACK, Type.KING);
-        location = king.getLocation();
-
-        Piece pawn = Piece.setup(new Square(5,5), Color.WHITE, Type.PAWN);
+        Piece pawn = Piece.setup(new Square(3,3), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
 
         assertEquals(true, moved);
-        assertEquals(5, king.getLocation().x);
-        assertEquals(5, king.getLocation().y);
+        assertEquals(3, king.getLocation().x);
+        assertEquals(3, king.getLocation().y);
         assertEquals(true, Board.getWhitePieces().isEmpty());
     }
 
     @Test
     public void captureOnePieceOfSeveral() {
-        Board.remove(location);
-
-        king = Piece.setup(new Square(4,4), Color.BLACK, Type.KING);
-        location = king.getLocation();
-
-        Piece pawn = Piece.setup(new Square(5,5), Color.WHITE, Type.PAWN);
-        Piece pawnNotToCapture = Piece.setup(new Square(3,5), Color.WHITE, Type.PAWN);
+        Piece pawn = Piece.setup(new Square(3,2), Color.WHITE, Type.PAWN);
+        Piece pawnNotToCapture = Piece.setup(new Square(4,2), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
 
         assertEquals(true, moved);
-        assertEquals(5, king.getLocation().x);
-        assertEquals(5, king.getLocation().y);
+        assertEquals(3, king.getLocation().x);
+        assertEquals(2, king.getLocation().y);
         assertEquals(1, Board.getWhitePieces().size());
 
         Board.remove(pawnNotToCapture.getLocation());
@@ -182,33 +172,21 @@ public class KingTests {
 
     @Test
     public void captureOnePieceThenAnother() {
-        Board.remove(location);
-
-        king = Piece.setup(new Square(4,4), Color.BLACK, Type.KING);
-        location = king.getLocation();
-
-        Piece pawn = Piece.setup(new Square(5,5), Color.WHITE, Type.PAWN);
-        Piece nextPawn = Piece.setup(new Square(3,5), Color.WHITE, Type.PAWN);
+        Piece pawn = Piece.setup(new Square(3,2), Color.WHITE, Type.PAWN);
+        Piece nextPawn = Piece.setup(new Square(4,2), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
 
         assertEquals(true, moved);
-        assertEquals(5, king.getLocation().x);
-        assertEquals(5, king.getLocation().y);
+        assertEquals(3, king.getLocation().x);
+        assertEquals(2, king.getLocation().y);
         assertEquals(1, Board.getWhitePieces().size());
-
-        moved = Board.move(location, new Square(4, 5));
-
-        assertEquals(true, moved);
-        assertEquals(4, king.getLocation().x);
-        assertEquals(5, king.getLocation().y);
-
 
         moved = Board.move(location, nextPawn.getLocation());
 
         assertEquals(true, moved);
-        assertEquals(3, king.getLocation().x);
-        assertEquals(5, king.getLocation().y);
+        assertEquals(4, king.getLocation().x);
+        assertEquals(2, king.getLocation().y);
 
         assertEquals(0, Board.getWhitePieces().size());
     }

@@ -145,22 +145,25 @@ public class Mover {
     private static boolean movePawn(Piece pawn, Square newLocation) {
         HashSet<Square> possibleMoves = new HashSet<>();
         Square current = pawn.getLocation();
+        Color color = pawn.getColor();
         Square temp = null;
 
-        boolean firstMove = (current.y == (LOWER_BOUND + 1)) || (current.y == (UPPER_BOUND + 1));
+        boolean firstMove = (color == Color.WHITE && current.y == (LOWER_BOUND + 1)) || (color == Color.BLACK && current.y == (UPPER_BOUND + 1));
 
         for (int x = LOWER_BOUND; x <= UPPER_BOUND; x++) {
             for (int y = LOWER_BOUND; y <= UPPER_BOUND; y++) {
-                int direction = pawn.getColor().direction();
+                int direction = color.direction();
                 temp = new Square(x, y);
 
                 if(firstMove && x == current.x && y == (current.y + direction * 2)) {
                     possibleMoves.add(temp);
                 } else if (x == current.x && y == (current.y + direction)) {
                     possibleMoves.add(temp);
+                } else if (y == current.y + 1 && (x == current.x - 1 || x == current.x + 1)) {
+                    if (Board.getPiece(temp) != null) {
+                        possibleMoves.add(temp);
+                    }
                 }
-
-                // diagonal capture moves;
             }
         }
 
