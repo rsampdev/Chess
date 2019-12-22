@@ -12,18 +12,18 @@ public class Board {
     public static Color playerTurn = Color.WHITE;
 
     public static boolean move(Square pieceLocation, Square pieceDestination) {
-        Iterator<Piece> iterator = Board.PIECES.values().iterator();
+        Collection<Piece> pieces = PIECES.values();
         Piece piece = null;
 
-        while (iterator.hasNext()) {
-            piece = iterator.next();
-            Square square = piece.getLocation();
+        for (Piece temp: pieces) {
+            Square square = temp.getLocation();
 
-            if (square.x == pieceLocation.x && square.y == pieceLocation.y) {
-                if(piece.getColor() != playerTurn) {
-                    piece = null;
+            if (square != null && square.x == pieceLocation.x && square.y == pieceLocation.y) {
+                if(temp.getColor() != playerTurn) {
+                    temp = null;
                 }
 
+                piece = temp;
                 break;
             }
         }

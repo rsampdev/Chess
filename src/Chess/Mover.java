@@ -6,11 +6,11 @@ import java.util.Set;
 public class Mover {
 
     public static boolean move(Piece piece, Square newLocation) {
-        HashSet<Square> moves = movesFor(piece, newLocation);
+        HashSet<Square> moves = movesFor(piece);
         return isWithinTheSetOfActualPossibleMovesAndThusWasMoved(piece, newLocation, moves);
     }
 
-    public static HashSet<Square> movesFor(Piece piece, Square newLocation) {
+    public static HashSet<Square> movesFor(Piece piece) {
         HashSet<Square> possibleMoves = new HashSet<>();
 
         switch (piece.getType()) {

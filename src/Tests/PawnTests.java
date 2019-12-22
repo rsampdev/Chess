@@ -32,7 +32,7 @@ public class PawnTests {
     }
 
     @Test
-    public void stayStillMove() {
+    public void pawn_stayStillMove() {
         boolean moved = Board.move(location, new Square(location.x, location.y));
 
         assertEquals(false, moved);
@@ -41,7 +41,7 @@ public class PawnTests {
     }
 
     @Test
-    public void moveUp() {
+    public void pawn_moveUp() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -50,7 +50,7 @@ public class PawnTests {
     }
 
     @Test
-    public void moveDown() {
+    public void pawn_moveDown() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(false, moved);
@@ -59,7 +59,7 @@ public class PawnTests {
     }
 
     @Test
-    public void moveUpTwoSpaces() {
+    public void pawn_moveUpTwoSpaces() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 2));
 
         assertEquals(true, moved);
@@ -68,7 +68,7 @@ public class PawnTests {
     }
 
     @Test
-    public void moveLeft() {
+    public void pawn_moveLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y));
 
         assertEquals(false, moved);
@@ -77,7 +77,7 @@ public class PawnTests {
     }
 
     @Test
-    public void moveRight() {
+    public void pawn_moveRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y));
 
         assertEquals(false, moved);
@@ -86,7 +86,7 @@ public class PawnTests {
     }
 
     @Test
-    public void moveAndMoveBack() {
+    public void pawn_moveAndMoveBack() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -102,7 +102,7 @@ public class PawnTests {
     }
 
     @Test
-    public void captureUpToTheLeft() {
+    public void pawn_captureUpToTheLeft() {
         Piece otherPawn = Piece.setup(new Square(location.x + 1, location.y + 1), Color.BLACK, Type.PAWN);
 
         boolean moved = Board.move(location, otherPawn.getLocation());
@@ -113,7 +113,7 @@ public class PawnTests {
     }
 
     @Test
-    public void captureUpToTheRight() {
+    public void pawn_captureUpToTheRight() {
         Piece otherPawn = Piece.setup(new Square(location.x - 1, location.y + 1), Color.BLACK, Type.PAWN);
 
         boolean moved = Board.move(location, otherPawn.getLocation());
@@ -124,7 +124,7 @@ public class PawnTests {
     }
 
     @Test
-    public void captureOnePieceOfSeveral() {
+    public void pawn_captureOnePieceOfSeveral() {
         Piece otherPawn = Piece.setup(new Square(3,3), Color.BLACK, Type.PAWN);
         Piece pawnNotToCapture = Piece.setup(new Square(4,4), Color.BLACK, Type.PAWN);
 
@@ -141,7 +141,7 @@ public class PawnTests {
     }
 
     @Test
-    public void captureOnePieceThenAnother() {
+    public void pawn_captureOnePieceThenAnother() {
         Piece firstPawn = Piece.setup(new Square(3,3), Color.BLACK, Type.PAWN);
         Piece nextPawn = Piece.setup(new Square(4,4), Color.BLACK, Type.PAWN);
 
@@ -162,7 +162,7 @@ public class PawnTests {
     }
 
     @Test
-    public void attemptToCaptureTeammate() {
+    public void pawn_attemptToCaptureTeammate() {
         Piece otherPawn = Piece.setup(new Square(3, 3), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, otherPawn.getLocation());

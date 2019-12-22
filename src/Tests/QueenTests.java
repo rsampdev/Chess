@@ -32,7 +32,7 @@ public class QueenTests {
     }
 
     @Test
-    public void stayStillMove() {
+    public void queen_stayStillMove() {
         boolean moved = Board.move(location, new Square(location.x, location.y));
 
         assertEquals(false, moved);
@@ -41,7 +41,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveUp() {
+    public void queen_moveUp() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -50,7 +50,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveDown() {
+    public void queen_moveDown() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(true, moved);
@@ -59,7 +59,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveLeft() {
+    public void queen_moveLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y));
 
         assertEquals(true, moved);
@@ -68,7 +68,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveRight() {
+    public void queen_moveRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y));
 
         assertEquals(true, moved);
@@ -77,7 +77,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveUpAndLeft() {
+    public void queen_moveUpAndLeft() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -93,7 +93,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveUpAndRight() {
+    public void queen_moveUpAndRight() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -109,7 +109,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveDownAndLeft() {
+    public void queen_moveDownAndLeft() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(true, moved);
@@ -125,7 +125,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveDownAndRight() {
+    public void queen_moveDownAndRight() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(true, moved);
@@ -141,7 +141,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveUpLeft() {
+    public void queen_moveUpLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -150,7 +150,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveUpRight() {
+    public void queen_moveUpRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -159,7 +159,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveDownLeft() {
+    public void queen_moveDownLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -168,7 +168,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveDownRight() {
+    public void queen_moveDownRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -177,7 +177,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveAllTheWayUpAndAllTheWayOver() {
+    public void queen_moveAllTheWayUpAndAllTheWayOver() {
         boolean moved = Board.move(location, new Square(location.x, 8));
 
         assertEquals(true, moved);
@@ -193,7 +193,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveTwiceLikeRook() {
+    public void queen_moveTwiceLikeRook() {
         boolean moved = Board.move(location, new Square(5, 4));
 
         assertEquals(true, moved);
@@ -209,7 +209,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveAndMoveBackLikeBishop() {
+    public void queen_moveAndMoveBackLikeBishop() {
         boolean moved = Board.move(location, new Square(5, 5));
 
         assertEquals(true, moved);
@@ -225,7 +225,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveTwiceLikeBishop() {
+    public void queen_moveTwiceLikeBishop() {
         boolean moved = Board.move(location, new Square(5, 5));
 
         assertEquals(true, moved);
@@ -241,7 +241,7 @@ public class QueenTests {
     }
 
     @Test
-    public void moveAndMoveBackLikeRook() {
+    public void queen_moveAndMoveBackLikeRook() {
         boolean moved = Board.move(location, new Square(5, 4));
 
         assertEquals(true, moved);
@@ -257,7 +257,7 @@ public class QueenTests {
     }
 
     @Test
-    public void captureOnePieceLikeRook() {
+    public void queen_captureOnePieceLikeRook() {
         Piece pawn = Piece.setup(new Square(location.x + 1, location.y), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
@@ -269,7 +269,7 @@ public class QueenTests {
     }
 
     @Test
-    public void captureOnePieceOfSeveralLikeRook() {
+    public void queen_captureOnePieceOfSeveralLikeRook() {
         Piece pawn = Piece.setup(new Square(5, 4), Color.WHITE, Type.PAWN);
         Piece pawnToNotCapture = Piece.setup(new Square(6, 4), Color.WHITE, Type.PAWN);
 
@@ -286,7 +286,7 @@ public class QueenTests {
     }
 
     @Test
-    public void captureOnePieceThenAnotherLikeRook() {
+    public void queen_captureOnePieceThenAnotherLikeRook() {
         Piece pawn = Piece.setup(new Square(5, 4), Color.WHITE, Type.PAWN);
         Piece nextPawn = Piece.setup(new Square(6, 4), Color.WHITE, Type.PAWN);
 
@@ -307,7 +307,7 @@ public class QueenTests {
     }
 
     @Test
-    public void attemptToCaptureTeammateLikeRook() {
+    public void queen_attemptToCaptureTeammateLikeRook() {
         Piece pawn = Piece.setup(new Square(5, 4), Color.BLACK, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
@@ -323,7 +323,7 @@ public class QueenTests {
     }
 
     @Test
-    public void captureOnePieceLikeBishop() {
+    public void queen_captureOnePieceLikeBishop() {
         Piece pawn = Piece.setup(new Square(location.x + 1, location.y + 1), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
@@ -335,7 +335,7 @@ public class QueenTests {
     }
 
     @Test
-    public void captureOnePieceOfSeveralLikeBishop() {
+    public void queen_captureOnePieceOfSeveralLikeBishop() {
         Piece pawn = Piece.setup(new Square(5, 5), Color.WHITE, Type.PAWN);
         Piece pawnToNotCapture = Piece.setup(new Square(6, 6), Color.WHITE, Type.PAWN);
 
@@ -352,7 +352,7 @@ public class QueenTests {
     }
 
     @Test
-    public void captureOnePieceThenAnotherLikeBishop() {
+    public void queen_captureOnePieceThenAnotherLikeBishop() {
         Piece pawn = Piece.setup(new Square(5, 5), Color.WHITE, Type.PAWN);
         Piece nextPawn = Piece.setup(new Square(6, 6), Color.WHITE, Type.PAWN);
 
@@ -373,7 +373,7 @@ public class QueenTests {
     }
 
     @Test
-    public void attemptToCaptureTeammateLikeBishop() {
+    public void queen_attemptToCaptureTeammateLikeBishop() {
         Piece pawn = Piece.setup(new Square(5, 5), Color.BLACK, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());

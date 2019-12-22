@@ -32,7 +32,7 @@ public class RookTests {
     }
 
     @Test
-    public void stayStillMove() {
+    public void rook_stayStillMove() {
         boolean moved = Board.move(location, new Square(location.x, location.y));
 
         assertEquals(false, moved);
@@ -41,7 +41,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveUp() {
+    public void rook_moveUp() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -50,7 +50,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveDown() {
+    public void rook_moveDown() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(true, moved);
@@ -59,7 +59,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveLeft() {
+    public void rook_moveLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y));
 
         assertEquals(true, moved);
@@ -68,7 +68,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveRight() {
+    public void rook_moveRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y));
 
         assertEquals(true, moved);
@@ -77,7 +77,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveUpAndLeft() {
+    public void rook_moveUpAndLeft() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -93,7 +93,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveUpAndRight() {
+    public void rook_moveUpAndRight() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -109,7 +109,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveDownAndLeft() {
+    public void rook_moveDownAndLeft() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(true, moved);
@@ -125,7 +125,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveDownAndRight() {
+    public void rook_moveDownAndRight() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(true, moved);
@@ -141,7 +141,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveTwice() {
+    public void rook_moveTwice() {
         boolean moved = Board.move(location, new Square(3, 2));
 
         assertEquals(true, moved);
@@ -157,7 +157,7 @@ public class RookTests {
     }
 
     @Test
-    public void moveAndMoveBack() {
+    public void rook_moveAndMoveBack() {
         boolean moved = Board.move(location, new Square(3, 2));
 
         assertEquals(true, moved);
@@ -173,7 +173,7 @@ public class RookTests {
     }
 
     @Test
-    public void captureOnePiece() {
+    public void rook_captureOnePiece() {
         Piece pawn = Piece.setup(new Square(location.x + 1, location.y), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
@@ -185,7 +185,7 @@ public class RookTests {
     }
 
     @Test
-    public void captureOnePieceOfSeveral() {
+    public void rook_captureOnePieceOfSeveral() {
         Piece pawn = Piece.setup(new Square(3, 2), Color.WHITE, Type.PAWN);
         Piece pawnToNotCapture = Piece.setup(new Square(4, 2), Color.WHITE, Type.PAWN);
 
@@ -202,7 +202,7 @@ public class RookTests {
     }
 
     @Test
-    public void captureOnePieceThenAnother() {
+    public void rook_captureOnePieceThenAnother() {
         Piece pawn = Piece.setup(new Square(3, 2), Color.WHITE, Type.PAWN);
         Piece nextPawn = Piece.setup(new Square(4, 2), Color.WHITE, Type.PAWN);
 
@@ -223,7 +223,7 @@ public class RookTests {
     }
 
     @Test
-    public void attemptToCaptureTeammate() {
+    public void rook_attemptToCaptureTeammate() {
         Piece pawn = Piece.setup(new Square(3, 2), Color.BLACK, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());

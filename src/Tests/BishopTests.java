@@ -32,7 +32,7 @@ public class BishopTests {
     }
 
     @Test
-    public void stayStillMove() {
+    public void bishop_stayStillMove() {
         boolean moved = Board.move(location, new Square(location.x, location.y));
 
         assertEquals(false, moved);
@@ -41,7 +41,7 @@ public class BishopTests {
     }
 
     @Test
-    public void moveUpLeft() {
+    public void bishop_moveUpLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -50,7 +50,7 @@ public class BishopTests {
     }
 
     @Test
-    public void moveUpRight() {
+    public void bishop_moveUpRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -59,7 +59,7 @@ public class BishopTests {
     }
 
     @Test
-    public void moveDownLeft() {
+    public void bishop_moveDownLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -68,7 +68,7 @@ public class BishopTests {
     }
 
     @Test
-    public void moveDownRight() {
+    public void bishop_moveDownRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -77,7 +77,7 @@ public class BishopTests {
     }
 
     @Test
-    public void captureOnePiece() {
+    public void bishop_captureOnePiece() {
         Piece pawn = Piece.setup(new Square(location.x + 1, location.y + 1), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
@@ -89,7 +89,7 @@ public class BishopTests {
     }
 
     @Test
-    public void captureOnePieceOfSeveral() {
+    public void bishop_captureOnePieceOfSeveral() {
         Piece pawn = Piece.setup(new Square(5, 5), Color.WHITE, Type.PAWN);
         Piece pawnToNotCapture = Piece.setup(new Square(6, 6), Color.WHITE, Type.PAWN);
 
@@ -106,7 +106,7 @@ public class BishopTests {
     }
 
     @Test
-    public void captureOnePieceThenAnother() {
+    public void bishop_captureOnePieceThenAnother() {
         Piece pawn = Piece.setup(new Square(5, 5), Color.WHITE, Type.PAWN);
         Piece nextPawn = Piece.setup(new Square(6, 6), Color.WHITE, Type.PAWN);
 
@@ -127,7 +127,7 @@ public class BishopTests {
     }
 
     @Test
-    public void attemptToCaptureTeammate() {
+    public void bishop_attemptToCaptureTeammate() {
         Piece pawn = Piece.setup(new Square(5, 5), Color.BLACK, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());

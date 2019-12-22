@@ -32,7 +32,7 @@ public class KnightTests {
     }
 
     @Test
-    public void stayStillMove() {
+    public void knight_stayStillMove() {
         boolean moved = Board.move(location, new Square(location.x, location.y));
 
         assertEquals(false, moved);
@@ -41,7 +41,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveUpAndRight() {
+    public void knight_moveUpAndRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 2));
 
         assertEquals(true, moved);
@@ -50,7 +50,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveRightAndUp() {
+    public void knight_moveRightAndUp() {
         boolean moved = Board.move(location, new Square(location.x + 2, location.y + 1));
 
         assertEquals(true, moved);
@@ -59,7 +59,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveRightAndDown() {
+    public void knight_moveRightAndDown() {
         boolean moved = Board.move(location, new Square(location.x + 2, location.y - 1));
 
         assertEquals(true, moved);
@@ -68,7 +68,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveDownAndRight() {
+    public void knight_moveDownAndRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y - 2));
 
         assertEquals(true, moved);
@@ -77,7 +77,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveDownAndLeft() {
+    public void knight_moveDownAndLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y - 2));
 
         assertEquals(true, moved);
@@ -86,7 +86,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveLeftAndDown() {
+    public void knight_moveLeftAndDown() {
         boolean moved = Board.move(location, new Square(location.x - 2, location.y - 1));
 
         assertEquals(true, moved);
@@ -95,7 +95,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveLeftAndUp() {
+    public void knight_moveLeftAndUp() {
         boolean moved = Board.move(location, new Square(location.x - 2, location.y + 1));
 
         assertEquals(true, moved);
@@ -104,7 +104,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveUpAndLeft() {
+    public void knight_moveUpAndLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y + 2));
 
         assertEquals(true, moved);
@@ -113,7 +113,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveTwice() {
+    public void knight_moveTwice() {
         boolean moved = Board.move(location, new Square(6, 6));
 
         assertEquals(true, moved);
@@ -129,7 +129,7 @@ public class KnightTests {
     }
 
     @Test
-    public void moveAndMoveBack() {
+    public void knight_moveAndMoveBack() {
         boolean moved = Board.move(location, new Square(6, 6));
 
         assertEquals(true, moved);
@@ -159,7 +159,7 @@ public class KnightTests {
     }
 
     @Test
-    public void captureOnePiece() {
+    public void knight_captureOnePiece() {
         Piece pawn = Piece.setup(new Square(location.x + 1, location.y + 2), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
@@ -171,7 +171,7 @@ public class KnightTests {
     }
 
     @Test
-    public void captureOnePieceOfSeveral() {
+    public void knight_captureOnePieceOfSeveral() {
         Piece pawn = Piece.setup(new Square(6, 6), Color.WHITE, Type.PAWN);
         Piece pawnToNotCapture = Piece.setup(new Square(4, 6), Color.WHITE, Type.PAWN);
 
@@ -188,7 +188,7 @@ public class KnightTests {
     }
 
     @Test
-    public void captureOnePieceThenAnother() {
+    public void knight_captureOnePieceThenAnother() {
         Piece pawn = Piece.setup(new Square(6, 6), Color.WHITE, Type.PAWN);
         Piece nextPawn = Piece.setup(new Square(7, 4), Color.WHITE, Type.PAWN);
 
@@ -209,7 +209,7 @@ public class KnightTests {
     }
 
     @Test
-    public void attemptToCaptureTeammate() {
+    public void knight_attemptToCaptureTeammate() {
         Piece pawn = Piece.setup(new Square(6, 6), Color.BLACK, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());

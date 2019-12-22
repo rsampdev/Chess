@@ -32,7 +32,7 @@ public class KingTests {
     }
 
     @Test
-    public void stayStillMove() {
+    public void king_stayStillMove() {
         boolean moved = Board.move(location, new Square(location.x, location.y));
 
         assertEquals(false, moved);
@@ -41,7 +41,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveUp() {
+    public void king_moveUp() {
         boolean moved = Board.move(location, new Square(location.x, location.y + 1));
 
         assertEquals(true, moved);
@@ -50,7 +50,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveDown() {
+    public void king_moveDown() {
         boolean moved = Board.move(location, new Square(location.x, location.y - 1));
 
         assertEquals(true, moved);
@@ -59,7 +59,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveLeft() {
+    public void king_moveLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y));
 
         assertEquals(true, moved);
@@ -68,7 +68,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveRight() {
+    public void king_moveRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y));
 
         assertEquals(true, moved);
@@ -77,7 +77,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveUpLeft() {
+    public void king_moveUpLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -86,7 +86,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveUpRight() {
+    public void king_moveUpRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -95,7 +95,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveDownLeft() {
+    public void king_moveDownLeft() {
         boolean moved = Board.move(location, new Square(location.x - 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -104,7 +104,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveDownRight() {
+    public void king_moveDownRight() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y - 1));
 
         assertEquals(true, moved);
@@ -113,7 +113,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveTwice() {
+    public void king_moveTwice() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -129,7 +129,7 @@ public class KingTests {
     }
 
     @Test
-    public void moveAndMoveBack() {
+    public void king_moveAndMoveBack() {
         boolean moved = Board.move(location, new Square(location.x + 1, location.y + 1));
 
         assertEquals(true, moved);
@@ -145,7 +145,7 @@ public class KingTests {
     }
 
     @Test
-    public void captureOnePiece() {
+    public void king_captureOnePiece() {
         Piece pawn = Piece.setup(new Square(3,3), Color.WHITE, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
@@ -157,7 +157,7 @@ public class KingTests {
     }
 
     @Test
-    public void captureOnePieceOfSeveral() {
+    public void king_captureOnePieceOfSeveral() {
         Piece pawn = Piece.setup(new Square(3,2), Color.WHITE, Type.PAWN);
         Piece pawnNotToCapture = Piece.setup(new Square(4,2), Color.WHITE, Type.PAWN);
 
@@ -174,7 +174,7 @@ public class KingTests {
     }
 
     @Test
-    public void captureOnePieceThenAnother() {
+    public void king_captureOnePieceThenAnother() {
         Piece pawn = Piece.setup(new Square(3,2), Color.WHITE, Type.PAWN);
         Piece nextPawn = Piece.setup(new Square(4,2), Color.WHITE, Type.PAWN);
 
@@ -196,7 +196,7 @@ public class KingTests {
     }
 
     @Test
-    public void attemptToCaptureTeammate() {
+    public void king_attemptToCaptureTeammate() {
         Piece pawn = Piece.setup(new Square(3, 3), Color.BLACK, Type.PAWN);
 
         boolean moved = Board.move(location, pawn.getLocation());
