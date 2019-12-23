@@ -64,7 +64,6 @@ public class Mover {
 
                 if ((y == current.y + 1 || y == current.y - 1) && (x == current.x - 1 || x == current.x || x == current.x + 1)) {
                     possibleMoves.add(temp);
-                    continue;
                 } else if (y == current.y && (x == current.x - 1 || x == current.x + 1)) {
                     possibleMoves.add(temp);
                 }

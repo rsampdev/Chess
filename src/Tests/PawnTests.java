@@ -17,8 +17,13 @@ public class PawnTests {
     static Piece pawn;
     static Square location;
 
+    private static Piece blackKing;
+    private static Piece whiteKing;
+
     @BeforeEach
     public void before() {
+        blackKing = Piece.setup(new Square(1, 8), Color.BLACK, Type.KING);
+        whiteKing = Piece.setup(new Square(8, 1), Color.WHITE, Type.KING);
         pawn = Piece.setup(new Square(2,2), Color.WHITE, Type.PAWN);
         location = pawn.getLocation();
         Board.playerTurn = Color.WHITE;
@@ -26,7 +31,11 @@ public class PawnTests {
 
     @AfterEach
     public void after() {
+        Board.remove(blackKing.getLocation());
+        Board.remove(whiteKing.getLocation());
         Board.remove(pawn.getLocation());
+        blackKing = null;
+        whiteKing = null;
         location = null;
         pawn = null;
     }
@@ -133,11 +142,11 @@ public class PawnTests {
         assertEquals(true, moved);
         assertEquals(3, pawn.getLocation().x);
         assertEquals(3, pawn.getLocation().y);
-        assertEquals(1, Board.getBlackPieces().size());
+        assertEquals(2, Board.getBlackPieces().size());
 
         Board.remove(pawnNotToCapture.getLocation());
 
-        assertEquals(0, Board.getBlackPieces().size());
+        assertEquals(1, Board.getBlackPieces().size());
     }
 
     @Test
@@ -150,7 +159,7 @@ public class PawnTests {
         assertEquals(true, moved);
         assertEquals(3, pawn.getLocation().x);
         assertEquals(3, pawn.getLocation().y);
-        assertEquals(1, Board.getBlackPieces().size());
+        assertEquals(2, Board.getBlackPieces().size());
 
         Board.playerTurn = Color.WHITE;
         moved = Board.move(location, nextPawn.getLocation());
@@ -158,7 +167,7 @@ public class PawnTests {
         assertEquals(true, moved);
         assertEquals(4, pawn.getLocation().x);
         assertEquals(4, pawn.getLocation().y);
-        assertEquals(0, Board.getBlackPieces().size());
+        assertEquals(1, Board.getBlackPieces().size());
     }
 
     @Test
@@ -170,10 +179,10 @@ public class PawnTests {
         assertEquals(false, moved);
         assertEquals(2, pawn.getLocation().x);
         assertEquals(2, pawn.getLocation().y);
-        assertEquals(2, Board.getWhitePieces().size());
+        assertEquals(3, Board.getWhitePieces().size());
 
         Board.remove(otherPawn.getLocation());
 
-        assertEquals(1, Board.getWhitePieces().size());
+        assertEquals(2, Board.getWhitePieces().size());
     }
 }

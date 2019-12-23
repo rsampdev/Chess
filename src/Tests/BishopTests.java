@@ -17,8 +17,13 @@ public class BishopTests {
     static Piece bishop;
     static Square location;
 
+    private static Piece blackKing;
+    private static Piece whiteKing;
+
     @BeforeEach
     public void before() {
+        blackKing = Piece.setup(new Square(3, 8), Color.BLACK, Type.KING);
+        whiteKing = Piece.setup(new Square(8, 3), Color.WHITE, Type.KING);
         bishop = Piece.setup(new Square(4, 4), Color.BLACK, Type.BISHOP);
         location = bishop.getLocation();
         Board.playerTurn = Color.BLACK;
@@ -26,7 +31,11 @@ public class BishopTests {
 
     @AfterEach
     public void after() {
+        Board.remove(blackKing.getLocation());
+        Board.remove(whiteKing.getLocation());
         Board.remove(bishop.getLocation());
+        blackKing = null;
+        whiteKing = null;
         location = null;
         bishop = null;
     }
@@ -85,7 +94,7 @@ public class BishopTests {
         assertEquals(true, moved);
         assertEquals(5, bishop.getLocation().x);
         assertEquals(5, bishop.getLocation().y);
-        assertEquals(true, Board.getWhitePieces().isEmpty());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -98,11 +107,11 @@ public class BishopTests {
         assertEquals(true, moved);
         assertEquals(5, bishop.getLocation().x);
         assertEquals(5, bishop.getLocation().y);
-        assertEquals(1, Board.getWhitePieces().size());
+        assertEquals(2, Board.getWhitePieces().size());
 
         Board.remove(pawnToNotCapture.getLocation());
 
-        assertEquals(0, Board.getWhitePieces().size());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -115,7 +124,7 @@ public class BishopTests {
         assertEquals(true, moved);
         assertEquals(5, bishop.getLocation().x);
         assertEquals(5, bishop.getLocation().y);
-        assertEquals(1, Board.getWhitePieces().size());
+        assertEquals(2, Board.getWhitePieces().size());
 
         Board.playerTurn = Color.BLACK;
         moved = Board.move(location, nextPawn.getLocation());
@@ -123,7 +132,7 @@ public class BishopTests {
         assertEquals(true, moved);
         assertEquals(6, bishop.getLocation().x);
         assertEquals(6, bishop.getLocation().y);
-        assertEquals(0, Board.getWhitePieces().size());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -135,10 +144,10 @@ public class BishopTests {
         assertEquals(false, moved);
         assertEquals(4, bishop.getLocation().x);
         assertEquals(4, bishop.getLocation().y);
-        assertEquals(2, Board.getBlackPieces().size());
+        assertEquals(3, Board.getBlackPieces().size());
 
         Board.remove(pawn.getLocation());
 
-        assertEquals(1, Board.getBlackPieces().size());
+        assertEquals(2, Board.getBlackPieces().size());
     }
 }

@@ -10,6 +10,7 @@ public class Board {
     static final int UPPER_BOUND = 8;
 
     public static Color playerTurn = Color.WHITE;
+    static boolean kingInCheck = false;
 
     public static boolean move(Square pieceLocation, Square pieceDestination) {
         Collection<Piece> pieces = PIECES.values();
@@ -28,9 +29,10 @@ public class Board {
             }
         }
 
+        Board.kingInCheck = Checkmate.isInCheck();
         boolean moved = false;
 
-        if(piece != null) {
+        if(piece != null && (!kingInCheck || piece.getType() == Type.KING)) {
             moved = piece.move(pieceDestination);
 
             if(moved) {

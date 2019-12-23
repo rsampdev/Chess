@@ -17,8 +17,13 @@ public class KnightTests {
     static Piece knight;
     static Square location;
 
+    private static Piece blackKing;
+    private static Piece whiteKing;
+
     @BeforeEach
     public void before() {
+        blackKing = Piece.setup(new Square(1, 8), Color.BLACK, Type.KING);
+        whiteKing = Piece.setup(new Square(1, 1), Color.WHITE, Type.KING);
         knight = Piece.setup(new Square(5,4), Color.BLACK, Type.KNIGHT);
         location = knight.getLocation();
         Board.playerTurn = Color.BLACK;
@@ -26,7 +31,11 @@ public class KnightTests {
 
     @AfterEach
     public void after() {
+        Board.remove(blackKing.getLocation());
+        Board.remove(whiteKing.getLocation());
         Board.remove(knight.getLocation());
+        blackKing = null;
+        whiteKing = null;
         location = null;
         knight = null;
     }
@@ -167,7 +176,7 @@ public class KnightTests {
         assertEquals(true, moved);
         assertEquals(6, knight.getLocation().x);
         assertEquals(6, knight.getLocation().y);
-        assertEquals(true, Board.getWhitePieces().isEmpty());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -180,11 +189,11 @@ public class KnightTests {
         assertEquals(true, moved);
         assertEquals(6, knight.getLocation().x);
         assertEquals(6, knight.getLocation().y);
-        assertEquals(1, Board.getWhitePieces().size());
+        assertEquals(2, Board.getWhitePieces().size());
 
         Board.remove(pawnToNotCapture.getLocation());
 
-        assertEquals(0, Board.getWhitePieces().size());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -197,7 +206,7 @@ public class KnightTests {
         assertEquals(true, moved);
         assertEquals(6, knight.getLocation().x);
         assertEquals(6, knight.getLocation().y);
-        assertEquals(1, Board.getWhitePieces().size());
+        assertEquals(2, Board.getWhitePieces().size());
 
         Board.playerTurn = Color.BLACK;
         moved = Board.move(location, nextPawn.getLocation());
@@ -205,7 +214,7 @@ public class KnightTests {
         assertEquals(true, moved);
         assertEquals(7, knight.getLocation().x);
         assertEquals(4, knight.getLocation().y);
-        assertEquals(0, Board.getWhitePieces().size());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -217,10 +226,10 @@ public class KnightTests {
         assertEquals(false, moved);
         assertEquals(5, knight.getLocation().x);
         assertEquals(4, knight.getLocation().y);
-        assertEquals(2, Board.getBlackPieces().size());
+        assertEquals(3, Board.getBlackPieces().size());
 
         Board.remove(pawn.getLocation());
 
-        assertEquals(1, Board.getBlackPieces().size());
+        assertEquals(2, Board.getBlackPieces().size());
     }
 }

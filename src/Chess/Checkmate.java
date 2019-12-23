@@ -11,28 +11,49 @@ public class Checkmate {
 
     public static boolean isInCheck() {
         Color playerTurn = Board.playerTurn;
-        boolean inCheck = false;
+        boolean canEscape = true;
 
         Piece king = null;
+        Square kingLocation = null;
         HashSet<Piece> enemies = null;
 
         if(playerTurn == Color.BLACK) {
             king = (Piece) Board.getBlackPieces().stream().filter(piece -> piece.getType() == Type.KING).toArray()[0];
-            enemies = (HashSet<Piece>) Board.getWhitePieces();
+            enemies = Board.getWhitePieces();
         } else {
             king = (Piece) Board.getWhitePieces().stream().filter(piece -> piece.getType() == Type.KING).toArray()[0];
-            enemies = (HashSet<Piece>) Board.getBlackPieces();
+            enemies = Board.getBlackPieces();
         }
 
+        kingLocation = king.getLocation();
+
         HashSet<Square> possibleKingMoves = Mover.movesFor(king);
-        HashSet<Square> possibleEnemyMoves = new HashSet<Square>();
+        HashSet<Square> actualKingMoves = Mover.movesFor(king);
+        HashSet<Square> possibleEnemyMoves = new HashSet<>();
 
         for (Piece enemy : enemies) {
             possibleEnemyMoves.addAll(Mover.movesFor(enemy));
         }
 
-        // calculate checkmate
+        for (Square possibleEnemyMove : possibleEnemyMoves) {
+            if (possibleEnemyMove.x == kingLocation.x && possibleEnemyMove.y == kingLocation.y) {
+                Board.kingInCheck = true;
+                break;
+            }
+        }
 
-        return inCheck;
+        for (Square possibleEnemyMove : possibleEnemyMoves) {
+            for (Square possibleKingMove : possibleKingMoves) {
+                if(possibleKingMove.x == possibleEnemyMove.x && possibleKingMove.y == possibleEnemyMove.y) {
+                    actualKingMoves.remove(possibleKingMove);
+                }
+            }
+        }
+
+        if (actualKingMoves.isEmpty()) {
+            canEscape = false;
+        }
+
+        return !canEscape;
     }
 }

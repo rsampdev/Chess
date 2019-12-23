@@ -17,8 +17,13 @@ public class RookTests {
     static Piece rook;
     static Square location;
 
+    private static Piece blackKing;
+    private static Piece whiteKing;
+
     @BeforeEach
     public void before() {
+        blackKing = Piece.setup(new Square(1, 8), Color.BLACK, Type.KING);
+        whiteKing = Piece.setup(new Square(5, 5), Color.WHITE, Type.KING);
         rook = Piece.setup(new Square(2, 2), Color.BLACK, Type.ROOK);
         location = rook.getLocation();
         Board.playerTurn = Color.BLACK;
@@ -26,7 +31,11 @@ public class RookTests {
 
     @AfterEach
     public void after() {
+        Board.remove(blackKing.getLocation());
+        Board.remove(whiteKing.getLocation());
         Board.remove(rook.getLocation());
+        blackKing = null;
+        whiteKing = null;
         location = null;
         rook = null;
     }
@@ -181,7 +190,7 @@ public class RookTests {
         assertEquals(true, moved);
         assertEquals(3, rook.getLocation().x);
         assertEquals(2, rook.getLocation().y);
-        assertEquals(true, Board.getWhitePieces().isEmpty());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -194,11 +203,11 @@ public class RookTests {
         assertEquals(true, moved);
         assertEquals(3, rook.getLocation().x);
         assertEquals(2, rook.getLocation().y);
-        assertEquals(1, Board.getWhitePieces().size());
+        assertEquals(2, Board.getWhitePieces().size());
 
         Board.remove(pawnToNotCapture.getLocation());
 
-        assertEquals(0, Board.getWhitePieces().size());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -211,7 +220,7 @@ public class RookTests {
         assertEquals(true, moved);
         assertEquals(3, rook.getLocation().x);
         assertEquals(2, rook.getLocation().y);
-        assertEquals(1, Board.getWhitePieces().size());
+        assertEquals(2, Board.getWhitePieces().size());
 
         Board.playerTurn = Color.BLACK;
         moved = Board.move(location, nextPawn.getLocation());
@@ -219,7 +228,7 @@ public class RookTests {
         assertEquals(true, moved);
         assertEquals(4, rook.getLocation().x);
         assertEquals(2, rook.getLocation().y);
-        assertEquals(0, Board.getWhitePieces().size());
+        assertEquals(1, Board.getWhitePieces().size());
     }
 
     @Test
@@ -231,10 +240,10 @@ public class RookTests {
         assertEquals(false, moved);
         assertEquals(2, rook.getLocation().x);
         assertEquals(2, rook.getLocation().y);
-        assertEquals(2, Board.getBlackPieces().size());
+        assertEquals(3, Board.getBlackPieces().size());
 
         Board.remove(pawn.getLocation());
 
-        assertEquals(1, Board.getBlackPieces().size());
+        assertEquals(2, Board.getBlackPieces().size());
     }
 }
